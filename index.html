@@ -77,7 +77,8 @@
 
       const fetchNews = async (page, q) => {
         console.log(`Fetching news for ${q}, Page number ${page}...`);
-        const url = `https://newsapi.org/v2/everything?q=${q}&from=2025-04-18&pageSize=20&language=en&page=${page}&sortBy=popularity&apiKey=d7f171a84df94c3da1e7344e9ffe7cab`;
+        const proxyUrl = "https://corsproxy.io/?";
+        const url = `${proxyUrl}https://newsapi.org/v2/everything?q=${q}&from=2025-04-18&pageSize=20&language=en&page=${page}&sortBy=popularity&apiKey=d7f171a84df94c3da1e7344e9ffe7cab`;
 
         const res = await fetch(url);
         const data = await res.json();
