@@ -78,8 +78,7 @@
 
         const fetchNews = async (page, q) => {
           console.log(`Fetching news for ${q}, Page number ${page}...`);
-          const proxyUrl = "https://corsproxy.io/?";
-          const url = `${proxyUrl}https://newsapi.org/v2/everything?q=${q}&from=2025-04-18&pageSize=20&language=en&page=${page}&sortBy=popularity&apiKey=d7f171a84df94c3da1e7344e9ffe7cab`;
+          const url = `https://newsapi.org/v2/everything?q=${q}&from=2025-04-10&pageSize=20&language=en&page=${page}&sortBy=popularity&apiKey=d7f171a84df94c3da1e7344e9ffe7cab`;
 
           const res = await fetch(url);
           const data = await res.json();
@@ -95,10 +94,10 @@
           console.log("Articles received:", articles);
           contentDiv.innerHTML = "";
 
-        //   if (!articles || articles.length === 0) {
-        //     contentDiv.innerHTML = "<p>No news found.</p>";
-        //     return;
-        //   }
+          if (!articles || articles.length === 0) {
+            contentDiv.innerHTML = "<p>No news found.</p>";
+            return;
+          }
 
           articles.forEach((article) => {
             const col = document.createElement("div");
@@ -106,17 +105,11 @@
 
             col.innerHTML = `
                 <div class="card h-100">
-                  <img src="${
-                    article.urlToImage || "https://via.placeholder.com/150"
-                  }" class="card-img-top" alt="News Image">
+                  <img src="${article.urlToImage}" class="card-img-top" alt="News Image">
                   <div class="card-body">
-                    <h5 class="card-title">${article.title || "No Title"}</h5>
-                    <p class="card-text">${
-                      article.description || "No Description"
-                    }</p>
-                    <a href="${
-                      article.url
-                    }" target="_blank" class="btn btn-primary">Read More</a>
+                    <h5 class="card-title">${article.title}</h5>
+                    <p class="card-text">${article.description}</p>
+                    <a href="${article.url}" target="_blank" class="btn btn-primary">Read More</a>
                   </div>
                 </div>
               `;
