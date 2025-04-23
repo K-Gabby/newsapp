@@ -72,79 +72,83 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      let currentQuery = "sports";
-      let currentPage = 1;
+      document.addEventListener("DOMContentLoaded", () => {
+        let currentQuery = "sports";
+        let currentPage = 1;
 
-      const fetchNews = async (page, q) => {
-        console.log(`Fetching news for ${q}, Page number ${page}...`);
-        const proxyUrl = "https://corsproxy.io/?";
-        const url = `${proxyUrl}https://newsapi.org/v2/everything?q=${q}&from=2025-04-18&pageSize=20&language=en&page=${page}&sortBy=popularity&apiKey=d7f171a84df94c3da1e7344e9ffe7cab`;
+        const fetchNews = async (page, q) => {
+          console.log(`Fetching news for ${q}, Page number ${page}...`);
+          const proxyUrl = "https://corsproxy.io/?";
+          const url = `${proxyUrl}https://newsapi.org/v2/everything?q=${q}&from=2025-04-18&pageSize=20&language=en&page=${page}&sortBy=popularity&apiKey=d7f171a84df94c3da1e7344e9ffe7cab`;
 
-        const res = await fetch(url);
-        const data = await res.json();
+          const res = await fetch(url);
+          const data = await res.json();
+          console.log(data); // check what we got
 
-        // Render the news to the DOM
-        renderNews(data.articles);
-        document.getElementById("resultCount").textContent = data.totalResults;
-      };
+          renderNews(data.articles);
+          document.getElementById("resultCount").textContent =
+            data.totalResults;
+        };
 
-      const renderNews = (articles) => {
-        const contentDiv = document.querySelector(".row.content");
-        contentDiv.innerHTML = ""; // Clear existing content
+        const renderNews = (articles) => {
+          const contentDiv = document.querySelector(".row.content");
+          console.log("Articles received:", articles);
+          contentDiv.innerHTML = "";
 
-        if (!articles || articles.length === 0) {
-          contentDiv.innerHTML = "<p>No news found.</p>";
-          return;
-        }
+        //   if (!articles || articles.length === 0) {
+        //     contentDiv.innerHTML = "<p>No news found.</p>";
+        //     return;
+        //   }
 
-        articles.forEach((article) => {
-          const col = document.createElement("div");
-          col.className = "col-md-4 mb-4";
+          articles.forEach((article) => {
+            const col = document.createElement("div");
+            col.className = "col-md-4 mb-4";
 
-          col.innerHTML = `
-              <div class="card h-100">
-                <img src="${
-                  article.urlToImage || "https://via.placeholder.com/150"
-                }" class="card-img-top" alt="News Image">
-                <div class="card-body">
-                  <h5 class="card-title">${article.title || "No Title"}</h5>
-                  <p class="card-text">${
-                    article.description || "No Description"
-                  }</p>
-                  <a href="${
-                    article.url
-                  }" target="_blank" class="btn btn-primary">Read More</a>
+            col.innerHTML = `
+                <div class="card h-100">
+                  <img src="${
+                    article.urlToImage || "https://via.placeholder.com/150"
+                  }" class="card-img-top" alt="News Image">
+                  <div class="card-body">
+                    <h5 class="card-title">${article.title || "No Title"}</h5>
+                    <p class="card-text">${
+                      article.description || "No Description"
+                    }</p>
+                    <a href="${
+                      article.url
+                    }" target="_blank" class="btn btn-primary">Read More</a>
+                  </div>
                 </div>
-              </div>
-            `;
+              `;
 
-          contentDiv.appendChild(col);
-        });
-      };
+            contentDiv.appendChild(col);
+          });
+        };
 
-      // Search button handler
-      document.getElementById("search").addEventListener("click", (e) => {
-        e.preventDefault();
-        currentQuery = document.getElementById("searchInput").value || "sports";
-        currentPage = 1;
-        fetchNews(currentPage, currentQuery);
-      });
-
-      // Pagination
-      document.getElementById("next").addEventListener("click", () => {
-        currentPage++;
-        fetchNews(currentPage, currentQuery);
-      });
-
-      document.getElementById("prev").addEventListener("click", () => {
-        if (currentPage > 1) {
-          currentPage--;
+        // Event listeners
+        document.getElementById("search").addEventListener("click", (e) => {
+          e.preventDefault();
+          currentQuery =
+            document.getElementById("searchInput").value || "sports";
+          currentPage = 1;
           fetchNews(currentPage, currentQuery);
-        }
-      });
+        });
 
-      // Initial fetch
-      fetchNews(currentPage, currentQuery);
+        document.getElementById("next").addEventListener("click", () => {
+          currentPage++;
+          fetchNews(currentPage, currentQuery);
+        });
+
+        document.getElementById("prev").addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            fetchNews(currentPage, currentQuery);
+          }
+        });
+
+        // Initial fetch
+        fetchNews(currentPage, currentQuery);
+      });
     </script>
   </body>
 </html>
