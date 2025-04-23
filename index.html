@@ -29,7 +29,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="index.html"
+                >Home</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Sports</a>
@@ -72,305 +74,76 @@
     <script>
       let currentQuery = "sports";
       let currentPage = 1;
+
       const fetchNews = async (page, q) => {
         console.log(`Fetching news for ${q}, Page number ${page}...`);
-        var url =
-          "https://newsapi.org/v2/everything?" +
-          "q=" +
-          q +
-          "&from=2025-04-18&" +
-          "pageSize=20&" +
-          "language=en&" +
-          "page=" +
-          page +
-          "&sortBy=popularity&" +
-          "apiKey=d7f171a84df94c3da1e7344e9ffe7cab";
+        const url = `https://newsapi.org/v2/everything?q=${q}&from=2025-04-18&pageSize=20&language=en&page=${page}&sortBy=popularity&apiKey=d7f171a84df94c3da1e7344e9ffe7cab`;
 
-        var req = new Request(url);
+        const res = await fetch(url);
+        const data = await res.json();
 
-        let a = await fetch(req);
-        let response = await a.json();
-        // console.log(JSON.stringify(response));
-        // let response = {
-        //   status: "ok",
-        //   totalResults: 2249,
-        //   articles: [
-        //     {
-        //       source: { id: "wired", name: "Wired" },
-        //       author: "Adrienne So",
-        //       title: "Garmin Vivoactive 6 Review: Reliable, Real Intelligence",
-        //       description:
-        //         "New subscription service notwithstanding, Garmin’s latest entry-level tracker is still reliable and attractive and works great.",
-        //       url: "https://www.wired.com/review/garmin-vivoactive-6/",
-        //       urlToImage:
-        //         "https://media.wired.com/photos/6802d3bd68bf21be6e9c8d99/191:100/w_1280,c_limit/Garmin-Vivoactive_042025_Lede.jpg",
-        //       publishedAt: "2025-04-19T13:33:00Z",
-        //       content:
-        //         "Garmin, the maker of our favorite fitness trackers, has several series of entry-level hybrid trackers. Sorting through them can be confusing. The Venu series is the most expensive, the premium tracke… [+2295 chars]",
-        //     },
-        //     {
-        //       source: { id: "the-verge", name: "The Verge" },
-        //       author: "Charles Pulliam-Moore",
-        //       title:
-        //         "Apple replaced Mythic Quest’s series finale after the show was cancelled",
-        //       description:
-        //         "If you didnât catch Mythic Questâs series finale when it first debuted last month, thereâs a chance you may never be able to see the episode as it originally was. Shortly after Mythic Questâs fourth season and its Side Quest spinoff hit Apple TV Plus,…",
-        //       url: "https://www.theverge.com/tv/651829/mythic-quest-new-finale",
-        //       urlToImage:
-        //         "https://platform.theverge.com/wp-content/uploads/sites/2/2025/04/Mythic_Quest_Photo_041006.jpg?quality=90&strip=all&crop=2.2997395833333%2C0%2C95.400520833333%2C100&w=1200",
-        //       publishedAt: "2025-04-18T16:18:09Z",
-        //       content:
-        //         "A revised version of the episode is now streaming, meant to tie up the shows loose ends.\r\nA revised version of the episode is now streaming, meant to tie up the shows loose ends.\r\nIf you didnt catch … [+1633 chars]",
-        //     },
-        //     {
-        //       source: { id: "the-verge", name: "The Verge" },
-        //       author: "Sheena Vasani",
-        //       title:
-        //         "iRobot’s Roomba Combo 10 Max is nearly 50 percent off for Verge readers",
-        //       description:
-        //         "Wouldn’t it be nice to tidy up your home without breaking a sweat? The Roomba Combo 10 Max robovac / mop hybrid can make that dream a reality, as it delivers an almost fully hands-free cleaning experience. And now through tomorrow, April 19th, it’s on sale at…",
-        //       url: "https://www.theverge.com/tech/651608/roomba-combo-10-max-steelseries-arctis-pro-wireless-headset-deal-sale",
-        //       urlToImage:
-        //         "https://platform.theverge.com/wp-content/uploads/sites/2/2025/04/8A0A2623.webp?quality=90&strip=all&crop=0%2C10.72910606942%2C100%2C78.54178786116&w=1200",
-        //       publishedAt: "2025-04-18T15:53:43Z",
-        //       content:
-        //         "We also found steep discounts on the last-gen Echo Show 5, Lego sets, and SteelSeries Arctis Pro Wireless headset.\r\nWe also found steep discounts on the last-gen Echo Show 5, Lego sets, and SteelSeri… [+3283 chars]",
-        //     },
-        //     {
-        //       source: { id: "the-verge", name: "The Verge" },
-        //       author: "David Pierce",
-        //       title: "Everybody’s got a favorite new game",
-        //       description:
-        //         "Hi, friends! Welcome to Installer No. 79, your guide to the best and Verge-iest stuff in the world. (If youâre new here, welcome, RIP your free time, and also you can read all the old editions at the Installer homepage.)  This week, Iâve been reading abou…",
-        //       url: "https://www.theverge.com/installer-newsletter/652291/blue-prince-great-circle-baldurs-gate-games-installer",
-        //       urlToImage:
-        //         "https://platform.theverge.com/wp-content/uploads/sites/2/2025/04/Installer-79.png?quality=90&strip=all&crop=0%2C10.788682187813%2C100%2C78.422635624373&w=1200",
-        //       publishedAt: "2025-04-19T19:58:02Z",
-        //       content:
-        //         "Plus, in this weeks Installer: A delightful instant camera, a great game comes to PS5, YouTuber gadgets, and much more.\r\nPlus, in this weeks Installer: A delightful instant camera, a great game comes… [+10923 chars]",
-        //     },
-        //     {
-        //       source: { id: "the-verge", name: "The Verge" },
-        //       author: "David Nield",
-        //       title: "How to scan a QR code with your phone",
-        //       description:
-        //         "The humble QR (or Quick Response) code has become ubiquitous. Invented back in the 1990s to scan car parts, the barcodes got a popularity boost during the pandemic when touchless tech became prioritized, and they’re now a regular part of daily life. You’ll fi…",
-        //       url: "https://www.theverge.com/how-to/651781/qr-code-android-ios-how-to",
-        //       urlToImage:
-        //         "https://platform.theverge.com/wp-content/uploads/sites/2/2025/04/HT061_QR_CODE.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200",
-        //       publishedAt: "2025-04-18T17:18:34Z",
-        //       content:
-        //         "You dont need an app for this your phone can do it already.\r\nYou dont need an app for this your phone can do it already.\r\nThe humble QR (or Quick Response) code has become ubiquitous. Invented back i… [+3600 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "Gizmodo.com" },
-        //       author: "Joe Tilleli",
-        //       title:
-        //         "Samsung Galaxy Watch Ultra Is Cheaper Than Apple Watch Ultra, but Tariffs Could End That Soon",
-        //       description:
-        //         "You can save up to $325 with a trade-in credit when purchasing the rugged, outdoorsy Galaxy Watch Ultra.",
-        //       url: "https://gizmodo.com/samsung-galaxy-watch-ultra-is-cheaper-than-apple-watch-ultra-but-tariffs-could-end-that-soon-2000590968",
-        //       urlToImage:
-        //         "https://gizmodo.com/app/uploads/2025/04/GalaxyWatchUltraWhiteBG.jpg",
-        //       publishedAt: "2025-04-18T21:15:22Z",
-        //       content:
-        //         "For runners, swimmers, cyclists, hikers, and just about anyone who likes to get their workouts done in the great outdoors the Galaxy Watch Ultra is what you’re looking for. It’s truly a fitness-first… [+2248 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "Gizmodo.com" },
-        //       author: "Gizmodo Deals",
-        //       title:
-        //         "Amazon Is Clearing Out Its Stock of These Older MacBook Airs, Now Almost 40% Off",
-        //       description:
-        //         "Probably the best MacBook Air deal on the market today.",
-        //       url: "https://gizmodo.com/amazon-is-clearing-out-its-stock-of-these-older-macbook-airs-now-almost-40-off-2000591130",
-        //       urlToImage:
-        //         "https://gizmodo.com/app/uploads/2024/12/macbook-air.jpg",
-        //       publishedAt: "2025-04-18T11:44:06Z",
-        //       content:
-        //         "If youve been waiting for the perfect moment to buy a premium MacBook Air, Amazons current deal on the 2022 MacBook Air (M2 chip, 8GB of RAM, 512GB of storage) is almost too good to be true. At $799 … [+2722 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "Gizmodo.com" },
-        //       author: "Gordon Jackson",
-        //       title:
-        //         "There Can Be Only One Highlander Remake, and It’s at Amazon",
-        //       description:
-        //         "Plus, Taika Waititi's live-action Akira is still a thing, apparently.",
-        //       url: "https://gizmodo.com/there-can-be-only-one-highlander-remake-and-its-at-amazon-2000590972",
-        //       urlToImage:
-        //         "https://gizmodo.com/app/uploads/2025/04/Quickening.jpg",
-        //       publishedAt: "2025-04-18T13:00:36Z",
-        //       content:
-        //         "Avengers: Doomsday is confirmed to end on a life-and-death cliffhanger. The new Street Fighter may have already cast its Ryu and Ken. And did Craig Mazin all but confirm Joel is doomed by the end The… [+6385 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "BBC News" },
-        //       author: null,
-        //       title: "Will WWE's big Netflix gamble pay off at WrestleMania?",
-        //       description:
-        //         "Wrestling's main event is to stream live on Netflix for the first time - here's why it matters.",
-        //       url: "https://www.bbc.com/news/articles/c62gq8p2mj2o",
-        //       urlToImage:
-        //         "https://ichef.bbci.co.uk/news/1024/branded_news/8de1/live/caaa5c80-1ac4-11f0-8699-af8a0981754f.jpg",
-        //       publishedAt: "2025-04-19T01:03:35Z",
-        //       content:
-        //         "John Cena (left) will face off against Cody Rhodes in an attempt to become WWE's only recognised 17-time world champion\r\nMillions of wrestling fans across the world are gearing up for this weekend's … [+8811 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "Android Central" },
-        //       author: "andrew.myrick@futurenet.com (Andrew Myrick)",
-        //       title: "Order a Retroid Pocket Mini? We’ve got bad news",
-        //       description:
-        //         "Did you pre-order the Retroid Pocket Classic? You might want to check your emails as there's some bad news.",
-        //       url: "https://www.androidcentral.com/gaming/android-games/order-a-retroid-pocket-mini-weve-got-bad-news",
-        //       urlToImage:
-        //         "https://cdn.mos.cms.futurecdn.net/pzSsCJx5jsCHxKoGKPXCTQ.jpg",
-        //       publishedAt: "2025-04-18T06:00:00Z",
-        //       content:
-        //         "The tariff and trade war between the U.S. and China has claimed one of its first victims, albeit an unlikely one. In response to the May 2 deadline, Retroid moved up the timeline for shipping the new… [+4828 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "Android Central" },
-        //       author: "nickodiaz@sbcglobal.net (Nickolas Diaz)",
-        //       title:
-        //         "Meta updates Ray-Ban smart glasses with 'natural' AI voices and expands apps",
-        //       description:
-        //         "Meta started rolling out an update for its Ray-Ban smart glasses.",
-        //       url: "https://www.androidcentral.com/gaming/virtual-reality/meta-ray-ban-smart-glasses-natural-ai-app-expansion-update",
-        //       urlToImage:
-        //         "https://cdn.mos.cms.futurecdn.net/osCcj5UBZceAcax3mf6NyS.jpg",
-        //       publishedAt: "2025-04-18T09:00:00Z",
-        //       content:
-        //         "What you need to know\r\n<ul><li>Ray-Ban Meta smart glasses are beginning to receive an update, which brings Spotify capabilities, as well as Apple Music and Shazam, to more places.</li><li>The glasses… [+3398 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "Android Central" },
-        //       author: "andrew.myrick@futurenet.com (Andrew Myrick)",
-        //       title: "eSIM simplified my life, but not in the way I expected",
-        //       description:
-        //         "An unfortunate mishap led to me being able to break the chains of eSIM, and I might just keep things this way for the foreseeable future.",
-        //       url: "https://www.androidcentral.com/phones/carriers/esim-simplified-my-life-but-not-in-the-way-i-expected",
-        //       urlToImage:
-        //         "https://cdn.mos.cms.futurecdn.net/xZYJ6UGXQUxjbEdWXMUgAT.jpg",
-        //       publishedAt: "2025-04-19T12:00:00Z",
-        //       content:
-        //         "(Image credit: Nicholas Sutrich / Android Central)\r\nBeyond the Alphabet is a weekly column that focuses on the tech world both inside and outside the confines of Mountain View.\r\nFor as long as I can … [+4564 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "Android Central" },
-        //       author: "jerry.hildenbrand@futurenet.com (Jerry Hildenbrand)",
-        //       title:
-        //         "I haven't switched phones for almost a year and I love it",
-        //       description:
-        //         "Setting up a new phone is fun for some people, but I hate it. I love not having to do it.",
-        //       url: "https://www.androidcentral.com/phones/i-havent-switched-phones-for-almost-a-year-and-i-love-it",
-        //       urlToImage:
-        //         "https://cdn.mos.cms.futurecdn.net/LFgJShXezaCaPrAAq9wbJd.jpg",
-        //       publishedAt: "2025-04-19T15:00:00Z",
-        //       content:
-        //         "I'm going to let you in on a big secret: I dislike a big part of my job.\r\nOkay, so that's a secret most people can relate to, but for the past 15 or so years, I've worked for a technology publication… [+4649 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "Android Central" },
-        //       author: "nandika.iyerravi@futurenet.com (Nandika Ravi)",
-        //       title:
-        //         "Samsung Galaxy Unpacked Summer 2025: How to watch and what to expect",
-        //       description:
-        //         "This summer may potentially bring new-gen foldables, the next Galaxy Watch, and possibly Samsung's XR headset.",
-        //       url: "https://www.androidcentral.com/phones/samsung-galaxy/samsung-galaxy-unpacked-summer-2025-how-to-watch-what-to-expect",
-        //       urlToImage:
-        //         "https://cdn.mos.cms.futurecdn.net/bvoDEbTNX5nM8S5e6Wi6ki.jpg",
-        //       publishedAt: "2025-04-19T10:00:00Z",
-        //       content:
-        //         "Samsung Galaxy Unpacked: Foldable Edition is potentially a few months away. Still, several leaks have been dropping like hotcakes about the company's next set of foldables, a possible tri-fold, or ev… [+14407 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "MacRumors" },
-        //       author: "Tim Hardwick",
-        //       title: "iPhone Shipments Down 9% in China's Q1 Smartphone Boom",
-        //       description:
-        //         "Apple's iPhone shipments in China declined by 9 percent in the first quarter compared to the year earlier, and it was the only major smartphone vendor to see a decline, according to data from research firm IDC.\n\n\n\n\n\nShipments of iPhones fell to 9.8 million un…",
-        //       url: "https://www.macrumors.com/2025/04/18/iphone-shipments-down-in-china-q1/",
-        //       urlToImage:
-        //         "https://images.macrumors.com/t/G87q6Sdfxb-VKyDAmgaltn2wINI=/1600x/article-new/2025/01/iPhone-16-Apple-Store-Levels.jpg",
-        //       publishedAt: "2025-04-18T09:10:53Z",
-        //       content:
-        //         "Apple's iPhone shipments in China declined by 9 percent in the first quarter compared to the year earlier, and it was the only major smartphone vendor to see a decline, according to data from researc… [+750 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "CNET" },
-        //       author: "Andrew Lanxon",
-        //       title:
-        //         "iPhone 16 Pro vs. Galaxy S25 Ultra: Camera Champions Compared",
-        //       description:
-        //         "Apple and Samsung's best phones can take amazing photos. But which does it better? Let's find out.",
-        //       url: "https://www.cnet.com/tech/mobile/iphone-16-pro-vs-galaxy-s25-ultra-camera-champions-compared/",
-        //       urlToImage:
-        //         "https://www.cnet.com/a/img/resize/04d8d7c3875f8eb19ea12b256c68caa6c84b89ae/hub/2025/01/25/db1638a3-f1b9-4979-8c0f-f5789293a7f6/galaxy-s25-ultra-vs-iphone-16-pro-max.jpg?auto=webp&fit=crop&height=675&width=1200",
-        //       publishedAt: "2025-04-19T12:00:06Z",
-        //       content:
-        //         "The iPhone 16 Pro and Galaxy S25 Ultra are among the best phones money can buy. They both pack powerful processors, glorious displays and a host of AI features, but it's the camera systems that reall… [+11566 chars]",
-        //     },
-        //     {
-        //       source: { id: null, name: "CNET" },
-        //       author: "Jon Reed",
-        //       title:
-        //         "Apple Foldable iPhone May Have Face ID Embedded in the Screen",
-        //       description:
-        //         "Apple is planning to put its facial recognition technology into the long-rumored folding iPhone, according to a new leak this week.",
-        //       url: "https://www.cnet.com/tech/mobile/apple-foldable-iphone-may-have-face-id-embedded-in-the-screen/",
-        //       urlToImage:
-        //         "https://www.cnet.com/a/img/resize/7c7d16f61d2df28cadde6f184c12a3403a8161df/hub/2025/04/14/e27c2407-b077-4558-9e93-b89f52739fa5/gettyimages-2209621854.jpg?auto=webp&fit=crop&height=675&width=1200",
-        //       publishedAt: "2025-04-19T13:00:09Z",
-        //       content:
-        //         "Apple has long been rumored to be working on a foldable iPhone and a new leak this week suggests it'll have another feature that has yet to appear in any Apple phone: a camera embedded under the scre… [+1697 chars]",
-        //     },
-        //   ],
-        // };
-        console.log(response);
-
-        let str = "";
-        resultCount.innerHTML = response.totalResults;
-        for (let item of response.articles) {
-          str =
-            str +
-            `<div class="card my-4 mx-2" style="width: 18rem">
-          <img height="184" src="${
-            item.urlToImage
-          }" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">${item.title.slice(0, 23)}</h5>
-            <p class="card-text">
-              ${item.description.slice(0, 123)}...
-            </p>
-            <a href="${
-              item.url
-            }" target="_blank" class="btn btn-primary">Read Article</a>
-          </div>
-        </div>`;
-        }
-        document.querySelector(".content").innerHTML = str;
+        // Render the news to the DOM
+        renderNews(data.articles);
+        document.getElementById("resultCount").textContent = data.totalResults;
       };
-      fetchNews(1, currentQuery);
-      search.addEventListener("click", (e) => {
+
+      const renderNews = (articles) => {
+        const contentDiv = document.querySelector(".row.content");
+        contentDiv.innerHTML = ""; // Clear existing content
+
+        if (!articles || articles.length === 0) {
+          contentDiv.innerHTML = "<p>No news found.</p>";
+          return;
+        }
+
+        articles.forEach((article) => {
+          const col = document.createElement("div");
+          col.className = "col-md-4 mb-4";
+
+          col.innerHTML = `
+              <div class="card h-100">
+                <img src="${
+                  article.urlToImage || "https://via.placeholder.com/150"
+                }" class="card-img-top" alt="News Image">
+                <div class="card-body">
+                  <h5 class="card-title">${article.title || "No Title"}</h5>
+                  <p class="card-text">${
+                    article.description || "No Description"
+                  }</p>
+                  <a href="${
+                    article.url
+                  }" target="_blank" class="btn btn-primary">Read More</a>
+                </div>
+              </div>
+            `;
+
+          contentDiv.appendChild(col);
+        });
+      };
+
+      // Search button handler
+      document.getElementById("search").addEventListener("click", (e) => {
         e.preventDefault();
-        let query = searchInput.value;
-        currentQuery = query;
-        fetchNews(1, query);
+        currentQuery = document.getElementById("searchInput").value || "sports";
+        currentPage = 1;
+        fetchNews(currentPage, currentQuery);
       });
-      prev.addEventListener("click", (e) => {
-        e.preventDefault();
+
+      // Pagination
+      document.getElementById("next").addEventListener("click", () => {
+        currentPage++;
+        fetchNews(currentPage, currentQuery);
+      });
+
+      document.getElementById("prev").addEventListener("click", () => {
         if (currentPage > 1) {
-          currentPage = currentPage - 1;
+          currentPage--;
           fetchNews(currentPage, currentQuery);
         }
       });
-      next.addEventListener("click", (e) => {
-        e.preventDefault();
-        currentPage = currentPage + 1;
-        fetchNews(currentPage, currentQuery);
-      });
+
+      // Initial fetch
+      fetchNews(currentPage, currentQuery);
     </script>
   </body>
 </html>
