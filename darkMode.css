@@ -1,0 +1,36 @@
+body {
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  .navbar, .card, .card-body, .btn, .form-control {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  }
+
+  body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+  }
+
+  body.dark-mode .navbar,
+  body.dark-mode .card {
+    background-color: #1e1e1e !important;
+    color: #ffffff !important;
+  }
+
+  body.dark-mode .card-text,
+  body.dark-mode .card-title,
+  body.dark-mode .btn-primary {
+    color: #ffffff;
+  }
+
+  body.dark-mode .btn-outline-success,
+  body.dark-mode .btn-outline-secondary {
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+
+  body.dark-mode .btn-outline-success:hover,
+  body.dark-mode .btn-outline-secondary:hover {
+    background-color: #ffffff;
+    color: #121212;
+  }
